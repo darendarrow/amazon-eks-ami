@@ -486,6 +486,10 @@ Resources:
                    --resource NodeGroup  \
                    --region ${AWS::Region}
 
+          #cloud-config
+          repo_update: true
+          repo_upgrade: all
+
   NodeGroup:
     Type: "AWS::AutoScaling::AutoScalingGroup"
     Properties:
