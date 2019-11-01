@@ -486,6 +486,14 @@ Resources:
                    --resource NodeGroup  \
                    --region ${AWS::Region}
 
+          #cloud-config
+          repo_update: true
+          repo_upgrade: all
+          # repo_upgrade: security  # Apply outstanding critical or important updates that Amazon marks as security updates.
+          # repo_upgrade: bugfix    # Apply updates that Amazon marks as bug fixes. Bug fixes are a larger set of updates, which include security updates and fixes for various other minor bugs.
+          # repo_upgrade: all       # Apply all applicable available updates, regardless of their classification.
+          # repo_upgrade: none      # Do not apply any updates to the instance on startup.
+
   NodeGroup:
     Type: "AWS::AutoScaling::AutoScalingGroup"
     Properties:
