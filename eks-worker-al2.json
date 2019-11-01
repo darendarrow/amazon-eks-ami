@@ -5,7 +5,7 @@
     "creator": "{{env `USER`}}",
     "encrypted": "false",
     "kms_key_id": "",
-    
+
     "aws_access_key_id": "{{env `AWS_ACCESS_KEY_ID`}}",
     "aws_secret_access_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
     "aws_session_token": "{{env `AWS_SESSION_TOKEN`}}",
@@ -29,8 +29,9 @@
     "ssh_username": "ec2-user",
     "temporary_security_group_source_cidrs": "",
     "associate_public_ip_address": "",
-    "subnet_id": ""
+    "subnet_id": "",
 
+    "nessus_version": "{{env `NESSUS_VERSION`}}"
   },
 
   "builders": [
@@ -58,7 +59,7 @@
           "delete_on_termination": true
         }
       ],
-      "ami_block_device_mappings": [    
+      "ami_block_device_mappings": [
         {
           "device_name": "/dev/xvda",
           "volume_type": "gp2",
@@ -84,7 +85,8 @@
           "source_ami_id": "{{ user `source_ami_id`}}",
           "kubernetes": "{{ user `kubernetes_version`}}/{{ user `kubernetes_build_date` }}/bin/linux/{{ user `arch` }}",
           "cni_version": "{{ user `cni_version`}}",
-          "cni_plugin_version": "{{ user `cni_plugin_version`}}"
+          "cni_plugin_version": "{{ user `cni_plugin_version`}}",
+          "nessus_agent_version": "{{ user `nessus_version`}}"
       },
       "ami_name": "{{user `ami_name`}}",
       "ami_description": "{{ user `ami_description` }}, (k8s: {{ user `kubernetes_version`}}, docker:{{ user `docker_version`}})"
@@ -114,7 +116,8 @@
         "CNI_PLUGIN_VERSION={{user `cni_plugin_version`}}",
         "AWS_ACCESS_KEY_ID={{user `aws_access_key_id`}}",
         "AWS_SECRET_ACCESS_KEY={{user `aws_secret_access_key`}}",
-        "AWS_SESSION_TOKEN={{user `aws_session_token`}}"
+        "AWS_SESSION_TOKEN={{user `aws_session_token`}}",
+        "NESSUS_VERSION={{user `nessus_version`}}"
       ]
     }
   ],

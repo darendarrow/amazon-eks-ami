@@ -28,6 +28,8 @@ validate_env_set CNI_VERSION
 validate_env_set CNI_PLUGIN_VERSION
 validate_env_set KUBERNETES_VERSION
 validate_env_set KUBERNETES_BUILD_DATE
+validate_env_set NESSUS_VERSION
+
 
 ################################################################################
 ### Machine Architecture #######################################################
@@ -63,6 +65,20 @@ sudo yum install -y \
     socat \
     unzip \
     wget
+
+################################################################################
+### Nessus Agent ###############################################################
+################################################################################
+
+# Install Nessus Agent
+INSTALL_NESSUS_AGENT="${INSTALL_NESSUS_AGENT:-true}"
+if [[ "$INSTALL_NESSUS_AGENT" == "true" ]]; then
+  wget -O /var/tmp/NessusAgent-$NESSUS_VERSION-amzn.x86_64.rpm https://www.tenable.com/downloads/api/v1/public/pages/nessus-agents/downloads/9972/download?i_agree_to_tenable_license_agreement=true
+  sudo rpm -Uvh /var/tmp/NessusAgent-$NESSUS_VERSION-amzn.x86_64.rpm
+  sudo systemctl daemon-reload
+  sudo systemctl enable nessusagent.service
+  sudo rm -rf /etc/tenable_tag
+fi
 
 ################################################################################
 ### Time #######################################################################
